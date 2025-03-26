@@ -8,15 +8,9 @@ services:
     envVars:
       - key: GEMINI_API_KEY
         value: AIzaSyDzZ1Vp7sokOh89Qt0Vm8j57-RSubfAMno
+      - key: NODE_ENV
+        value: production
     plan: free
     autoDeploy: true
     rootDir: server # Path to the backend folder
 
-  # Frontend Service
-  - name: socketproject-frontend
-    type: web
-    env: static
-    buildCommand: npm install && npm run build
-    staticPublishPath: client/build # Path to the frontend build folder
-    plan: free
-    autoDeploy: true
