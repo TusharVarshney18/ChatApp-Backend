@@ -17,7 +17,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
    cors: {
-      origin: ['https://chat-app-frontend-lime.vercel.app/'], // Allow specific frontend URL
+      origin: ['https://chat-app-frontend-lime.vercel.app'], // Allow specific frontend URL
       methods: ["GET", "POST"]
    }
 });
