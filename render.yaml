@@ -12,5 +12,5 @@ services:
         value: production
     plan: free
     autoDeploy: true
-    rootDir: server # Path to the backend folder
+    rootDir: . # Updated to current directory
 
