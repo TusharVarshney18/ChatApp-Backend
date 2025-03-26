@@ -22,6 +22,11 @@ const io = new Server(server, {
    }
 });
 
+// Define the root route
+app.get('/', (req, res) => {
+   res.send('Welcome to the Socket Project!');
+});
+
 io.on('connection', (socket) => {
    console.log(`User connected: ${socket.id}`);
 
