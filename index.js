@@ -44,7 +44,12 @@ io.on('connection', (socket) => {
       io.in(data.room).emit('receive_message', {
          author: data.author,
          message: data.message,
-         time: new Date(Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+         time: new Date().toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+            timeZone: 'Asia/Kolkata' // Set timezone to IST
+         }),
       });
    });
 
@@ -70,7 +75,12 @@ io.on('connection', (socket) => {
          socket.emit('receive_ai_message', {
             author: 'AI',
             message: response.text,
-            time: new Date(Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            time: new Date().toLocaleTimeString('en-US', {
+               hour: '2-digit',
+               minute: '2-digit',
+               hour12: true,
+               timeZone: 'Asia/Kolkata' // Set timezone to IST
+            }),
          });
       } catch (error) {
          console.error('Error generating AI response:', error);
@@ -79,7 +89,12 @@ io.on('connection', (socket) => {
          socket.emit('receive_ai_message', {
             author: 'AI',
             message: 'Sorry, something went wrong. Please try again later.',
-            time: new Date(Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            time: new Date().toLocaleTimeString('en-US', {
+               hour: '2-digit',
+               minute: '2-digit',
+               hour12: true,
+               timeZone: 'Asia/Kolkata' // Set timezone to IST
+            }),
          });
       }
    });
