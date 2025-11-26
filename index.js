@@ -3,6 +3,8 @@ const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
 const { GoogleGenAI } = require('@google/genai'); // Correct import
+const multer = require('multer');
+const path = require('path');
 
 require('dotenv').config(); // Load environment variables
 const app = express();
@@ -20,6 +22,31 @@ const io = new Server(server, {
       origin: ['https://chat-app-frontend-lime.vercel.app', 'http://localhost:3000'], // Allow specific frontend URLs
       methods: ["GET", "POST"]
    }
+});
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+   destination: (req, file, cb) => {
+      cb(null, 'uploads/'); // Save files to the 'uploads' directory
+   },
+   filename: (req, file, cb) => {
+      cb(null, `${Date.now()}-${file.originalname}`); // Use a timestamp to avoid filename conflicts
+   },
+});
+
+const upload = multer({ storage });
+
+// Serve static files from the 'uploads' directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// File upload endpoint
+app.post('/upload', upload.single('file'), (req, res) => {
+   if (!req.file) {
+      return res.status(400).json({ success: false, message: 'No file uploaded.' });
+   }
+
+   const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+   res.status(200).json({ success: true, fileUrl });
 });
 
 // Define the root route
